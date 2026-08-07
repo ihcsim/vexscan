@@ -104,6 +104,12 @@ vexscan --rpm ./repo/x86_64/ --format inventory
 # network at all (see below)
 vexscan --image myorg/app:latest --all --osv-url http://osv-proxy.corp:8000
 vexscan --image myorg/app:latest --all --osv-dir /srv/osv
+
+# Works wtih local and remote image files
+vexscan --image-file "https://github.com/rancher/rke2/releases/download/v1.36.3-rc5%2Brke2r1/rke2-images.linux-amd64.txt" \
+  --package go:golang.org/x/crypto
+vexscan --image-file "https://releases.rancher.com/harvester/v1.8.1/image-lists-amd64.tar.gz" \
+  --package go:golang.org/x/crypto
 ```
 
 ## Selecting what to check
@@ -273,7 +279,7 @@ vexscan --rpm https://dl.rockylinux.org/pub/rocky/9/BaseOS/x86_64/os/Packages/o/
 vexscan --rpm ./repo/x86_64/ --format inventory
 ```
 
-The flag is repeatable and mutually exclusive with `--image`, `--rootfs`,
+The flag is repeatable and mutually exclusive with `--image`, `--image-file`, `--rootfs`,
 `--repo` and `--sbom`. A directory is walked for `*.rpm`, sorted, so a repeated scan queries
 in the same order. The report says `"mode": "rpm"`.
 
